@@ -4,8 +4,8 @@ import { SafeAreaView, Text } from "react-native"
 const App = () => {
   return(
     <SafeAreaView>
-      <Text>
-        Deneme Branch
+      <Text> 
+        Deneme Branch 2
       </Text>
     </SafeAreaView>
   )
