@@ -5,7 +5,7 @@ const App = () => {
   return(
     <SafeAreaView>
       <Text>
-        Deneme
+        Deneme Branch
       </Text>
     </SafeAreaView>
   )
