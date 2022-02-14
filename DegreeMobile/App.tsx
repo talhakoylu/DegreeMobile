@@ -16,11 +16,13 @@ const theme = extendTheme({
   }
 });
 
+
+
 const App = () => {
   return (
     <NativeBaseProvider theme={theme}>
       <SafeAreaView>
-        <HomeScreen />
+        <HomeScreen/>
       </SafeAreaView>
     </NativeBaseProvider>
   )
