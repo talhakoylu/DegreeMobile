@@ -16,11 +16,16 @@ const theme = extendTheme({
   }
 });
 
+const config = {
+  dependencies: {
+    "linear-gradient": require("react-native-linear-gradient").default,
+  },
+};
 
 
 const App = () => {
   return (
-    <NativeBaseProvider theme={theme}>
+    <NativeBaseProvider theme={theme} config={config}>
       <SafeAreaView>
         <HomeScreen/>
       </SafeAreaView>

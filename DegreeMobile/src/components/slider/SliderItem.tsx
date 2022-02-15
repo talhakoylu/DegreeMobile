@@ -1,5 +1,6 @@
 import { Box, Image, Text, View } from 'native-base';
 import React from 'react'
+import LinearGradient from "react-native-linear-gradient"
 
 interface Props {
     imageUri: string;
@@ -7,20 +8,30 @@ interface Props {
     [key: string]: any;
 }
 
-const SliderItem: React.FC<Props> = ({imageUri, heading, ...props}) => {
+const SliderItem: React.FC<Props> = ({ imageUri, heading, ...props }) => {
     return (
-        <Box style={{ height: 130, width: 130, borderWidth: 0.5, borderColor: '#ddddd', borderRadius: 10 }} {...props}>
-            <View style={{ flex: 2 }}>
-                <Image source={{uri: imageUri}} alt={heading}
-                    style={{ flex: 1, width: 0.1, height: 0.1, resizeMode: 'cover' }}
-                />
-            </View>
+        <Box borderRadius={"md"} height={150} overflow={"hidden"} {...props}>
+            <Image source={{ uri: imageUri }} alt={heading} size={"2xl"} resizeMode={"cover"} />
 
-            <View style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>
-                <Text style={{ fontSize: 12, fontWeight: '700' }}>
-                    {heading}
-                </Text>
-            </View>
+            <Box position={"absolute"} height={"full"} width={"full"} _text={{
+                noOfLines: 2,
+                color: "white",
+                fontSize: "sm",
+                bold: true,
+                flex: 1,
+                bottom: 4,
+                left: 5,
+                right: 5,
+                position: "absolute"
+            }} bg={{
+                linearGradient: {
+                    colors: ["rgba(0,0,0,0)", "rgba(0,0,0,0.05)", "rgba(0,0,0,0.3)", "rgba(0,0,0,0.6)", "dark.50"],
+                    start: [0, 0],
+                    end: [0, 1],
+                },
+            }}>
+                {heading}
+            </Box>
         </Box>
     )
 }
