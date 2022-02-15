@@ -20,7 +20,7 @@ const LastSolvedQuizzes: React.FC<Props> = ({ title = "Last Solved Quizzes", des
         <CustomContainer>
             <VStack space={3} width={"100%"} {...props}>
                 <HStack justifyContent={"space-between"} alignItems={"center"}>
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                    <Text fontWeight={"bold"} fontSize={"md"}>
                         {title}
                     </Text>
                     {
