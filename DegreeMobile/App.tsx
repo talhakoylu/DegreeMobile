@@ -1,10 +1,10 @@
-import CustomContainer from '@components/CustomContainer';
-import StandardLayout from '@views/layouts/StandardLayout';
+import NavigationIndex from '@navigations/NavigationIndex';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '@views/screens/HomeScreen';
-import { Container, extendTheme, NativeBaseProvider, Text, View } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Path } from 'react-native-svg';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const theme = extendTheme({
   components: {
@@ -26,9 +26,9 @@ const config = {
 const App = () => {
   return (
     <NativeBaseProvider theme={theme} config={config}>
-      <SafeAreaView>
-        <HomeScreen/>
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <NavigationIndex />
+      </SafeAreaProvider>
     </NativeBaseProvider>
   )
 }

@@ -3,11 +3,10 @@ import JoinQuizHomeBox from '@components/JoinQuizHomeBox'
 import LastSolvedQuizzes from '@components/solved_quizzes/LastSolvedQuizzes'
 import StandardLayout from '@views/layouts/StandardLayout'
 import Slider from '@components/slider/Slider'
-import { ScrollView, VStack } from 'native-base'
 import React from 'react'
 
 
-const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC<{navigation: any}> = ({navigation}) => {
     return (
         <StandardLayout>
             <CustomContainer>
