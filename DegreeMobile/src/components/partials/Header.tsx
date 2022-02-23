@@ -3,7 +3,7 @@ import { Box, Button, Circle, HStack, Icon, IconButton, Pressable, Text } from '
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import * as RootNavigation from '@navigations/NavigationRef'
 
 const Header: React.FC<{ [key: string]: any }> = ({ ...props }) => {
@@ -36,14 +36,21 @@ const Header: React.FC<{ [key: string]: any }> = ({ ...props }) => {
                     <Text fontWeight={"bold"} fontSize={"lg"}>Ahmet Talha</Text>
                 </Box>
                 <HStack space={2}>
-                    <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                    {/* <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
                         as: isCurrentRouteHome ? Entypo : AntDesign,
                         name: isCurrentRouteHome ? "dots-three-horizontal" : "home",
                         size: "sm",
                         color: "dark.50"
                     }} onPress={() => isCurrentRouteHome ? RootNavigation.navigate("DashboardHome") : RootNavigation.navigate("Home")}>
-                    </IconButton>
-                    {!isCurrentRouteDashboardHome && !isCurrentRouteHome ? <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                    </IconButton> */}
+                    {RootNavigation.isReadyAndCanGoBack() && !isCurrentRouteHome ? <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                        as: MaterialCommunityIcons,
+                        name: "keyboard-backspace",
+                        size: "sm",
+                        color: "dark.50"
+                    }} onPress={() => RootNavigation.goBack()}>
+                    </IconButton>: null}
+                    {!isCurrentRouteDashboardHome ? <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
                         as: Entypo,
                         name: "dots-three-horizontal",
                         size: "sm",

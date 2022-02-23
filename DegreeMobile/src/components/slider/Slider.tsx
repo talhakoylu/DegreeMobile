@@ -26,19 +26,19 @@ const Slider: React.FC<Props> = ({ heading = headingDefault, description = descr
             >
                 <HStack space={3} justifyContent={"space-between"} >
                     <SliderItem imageUri={'https://images.pexels.com/photos/1716861/pexels-photo-1716861.jpeg'}
-                        heading="Engineering Concepts & the Pikachu Universe"
+                        heading="Engineering Concepts & the Pikachu Universe" quizId={4}
                     />
                     <SliderItem imageUri={'https://images.pexels.com/photos/1310847/pexels-photo-1310847.jpeg'}
-                        heading="Quiz #2"
+                        heading="Quiz #2" quizId={4}
                     />
                     <SliderItem imageUri={'https://images.pexels.com/photos/1049622/pexels-photo-1049622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
-                        heading="Quiz #3"
+                        heading="Quiz #3" quizId={4}
                     />
                     <SliderItem imageUri={'https://images.pexels.com/photos/1049622/pexels-photo-1049622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
-                        heading="Quiz #4"
+                        heading="Quiz #4" quizId={4}
                     />
                     <SliderItem imageUri={'https://images.pexels.com/photos/1049622/pexels-photo-1049622.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'}
-                        heading="Quiz #5"
+                        heading="Quiz #5" quizId={4}
                     />
                 </HStack>
             </ScrollView>

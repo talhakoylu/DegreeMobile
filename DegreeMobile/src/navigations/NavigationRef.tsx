@@ -13,3 +13,17 @@ export function navigate(name: any, params?: object){
         navigationRef.navigate(name, params);
     }
 }
+
+export function goBack(){
+    if(isReadyAndCanGoBack()){
+        navigationRef.goBack()
+    }
+}
+
+export function isReadyAndCanGoBack(){
+    if(navigationRef.isReady() && navigationRef.canGoBack()){
+        return true;
+    }
+
+    return false;
+}
