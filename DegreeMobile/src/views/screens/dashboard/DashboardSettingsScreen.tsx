@@ -6,7 +6,7 @@ const DashboardSettingsScreen: React.FC = () => {
     return (
         <StandardLayout>
             <Text>
-                sa
+                DASHBOARD SETTINGS
             </Text>
         </StandardLayout>
     )
