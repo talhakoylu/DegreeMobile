@@ -6,6 +6,5 @@ import UserSettingsScreen from "./dashboard/UserSettingsScreen";
 import HomeScreen from "./HomeScreen";
 import QuizDetailQuestionsAndAnswersScreen from "./QuizDetailQuestionsAndAnswersScreen";
 import QuizPostDetailScreen from "./QuizPostDetailScreen";
-import LoginScreen from "./login_register/LoginScreen";
-import RegisterScreen from "./login_register/RegisterScreen";
-export {ChangePasswordScreen, DashboardHomeScreen, DashboardSettingsScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen,QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen, LoginScreen, RegisterScreen}
+
+export {ChangePasswordScreen, DashboardHomeScreen, DashboardSettingsScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen,QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen}
