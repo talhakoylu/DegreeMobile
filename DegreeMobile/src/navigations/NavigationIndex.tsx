@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ChangePasswordScreen, DashboardHomeScreen, DashboardSettingsScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen, QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen, LoginScreen, RegisterScreen } from '@views/screens/Index';
+import { ChangePasswordScreen, DashboardHomeScreen, DashboardSettingsScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen, QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen, LoginScreen, RegisterScreen, QuizJoinScreen } from '@views/screens/Index';
+import AnswersScreen from '@views/screens/quiz/AnswersScreen';
 
 import React from 'react'
 import { navigationRef } from './NavigationRef';
@@ -13,7 +14,7 @@ const NavigationIndex: React.FC = () => {
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator screenOptions={{
                 headerShown: false
-            }} initialRouteName={"Login"}>
+            }} initialRouteName={"Home"}>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="DashboardHome" component={DashboardHomeScreen} />
                 <Stack.Screen name="DashboardSettings" component={DashboardSettingsScreen} />
@@ -24,6 +25,8 @@ const NavigationIndex: React.FC = () => {
                 <Stack.Screen name="QuizPostQuestionsAnswers" options={{ headerShown: true, title: "Question & Answers" }} component={QuizDetailQuestionsAndAnswersScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Register" component={RegisterScreen} />
+                <Stack.Screen name="QuizJoin" component={QuizJoinScreen} />
+                <Stack.Screen name="QuizAnswers" component={AnswersScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     )
