@@ -17,7 +17,7 @@ const HomeScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <JoinQuizHomeBox />
                 <LastSolvedQuizzes description='The last 5 quizzes you have joined.' enableLink />
             </StandardLayout>
-            <Fab renderInPortal={false} shadow={2} size="sm" colorScheme={"purple"} icon={<Icon color="white" as={MaterialCommunityIcons} name="rocket-launch" size="sm" />} />
+            <Fab renderInPortal={false} shadow={2} size="sm" colorScheme={"purple"} icon={<Icon color="white" as={MaterialCommunityIcons} onPress={() => navigation.navigate("QuizJoin")} name="rocket-launch" size="sm" />} />
         </>
     )
 }

@@ -4,6 +4,7 @@ import CustomContainer from './CustomContainer'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import ImageLinks from '../../assets/ImageLinks'
 import { StyleSheet } from 'react-native'
+import * as RootNavigation from '@navigations/NavigationRef'
 
 const JoinQuizHomeBox: React.FC = () => {
     const [isPortrait] = useMediaQuery({
@@ -14,7 +15,7 @@ const JoinQuizHomeBox: React.FC = () => {
             <Box width={"full"} overflow={"hidden"} flex={1} rounded={"lg"} backgroundColor={"violet.400"} height={120}>
                 <VStack space={3} zIndex={1} flex={1} top={isPortrait ? 2 : 5} left={5} width={isPortrait ? "55%" : "70%"}>
                     <Text style={styles.textWithShadow} bold fontSize={"md"} color={"white"}>Join a quiz and have fun with your friends!</Text>
-                    <Button shadow={1} leftIcon={<Icon as={MaterialCommunityIcons} size={"xs"} name={"rocket-launch"} />} colorScheme={"yellow"}>JOIN</Button>
+                    <Button shadow={1} leftIcon={<Icon as={MaterialCommunityIcons} size={"xs"} name={"rocket-launch"} />} colorScheme={"yellow"} onPress={() => RootNavigation.navigate("QuizJoin")}>JOIN</Button>
                 </VStack>
                 <Image position={"absolute"} height={120} width={180} bottom={-15} right={-38} source={ImageLinks.quiz_icon} alt={"xd"} />
             </Box>
