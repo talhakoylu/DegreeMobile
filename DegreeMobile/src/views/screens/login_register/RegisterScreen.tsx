@@ -1,39 +1,41 @@
-import { Box, Button, Checkbox, Container, Divider, FormControl, Heading, HStack, Icon, IconButton, Input, Link, Modal, Pressable, ScrollView, Stack, Text, View, VStack } from 'native-base';
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Alert, Platform } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo'
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 import RegistrationLayout from '@views/layouts/RegistrationLayout';
-import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
+import { Box, Button, FormControl, HStack, IconButton, Input, Link, Modal, Text, VStack } from 'native-base';
+import React, { useContext, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Alert } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+import Entypo from 'react-native-vector-icons/Entypo';
+import * as yup from 'yup';
+import { AuthContext } from '../../../contexts/AuthContext';
+import { AxiosContext } from '../../../contexts/AxiosContext';
 
 const schema = yup.object({
     password: yup.string()
-        .required("Password is required.")
-        .min(6, "Password must be at least 6 characters.")
-        .max(36, "Password can be up to 36 characters.")
+        .required('Password is required.')
+        .min(6, 'Password must be at least 6 characters.')
+        .max(36, 'Password can be up to 36 characters.')
         .matches(
             /^(?=.*[a-z])(?=.*[A-Z])/,
-            "Password must contain at least 1 uppercase and lowercase letters.")
+            'Password must contain at least 1 uppercase and lowercase letters.')
         .matches(
             /^(?=.*[0-9])/,
-            "Password must contain at least 1 number.")
+            'Password must contain at least 1 number.')
         .matches(
             /^(?=.*[!@_#\$%\^&\*])/,
-            "Password must contain at least 1 symbol."),
+            'Password must contain at least 1 symbol.'),
     passwordConfirm: yup.string()
-        .required("Confirm password is required.")
-        .oneOf([yup.ref('password')], "Password must match."),
-    name: yup.string()
-        .required("First name is required."),
-    surname: yup.string()
-        .required("Last name is required."),
+        .required('Confirm password is required.')
+        .oneOf([yup.ref('password')], 'Password must match.'),
+    firstName: yup.string()
+        .required('First name is required.'),
+    lastName: yup.string()
+        .required('Last name is required.'),
     email: yup.string()
-        .required("Email is required.")
-        .email("Invalid email format."),
-    birthDate: yup.date().required("Birth Day is required.")
+        .required('Email is required.')
+        .email('Invalid email format.'),
+    birthdate: yup.date().required('Birth Day is required.'),
 }).required();
 
 const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
@@ -45,69 +47,88 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     const [openModalPrivacy, setOpenModalPrivacy] = useState(false);
 
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [date, setDate] = useState<Date | null>()
+    const [date, setDate] = useState<Date | null>();
 
     const { control, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        defaultValues: {
+            firstName: 'test',
+            lastName: 'test',
+            email: 'talhakoylu2@gmail.com',
+            password: 'Talha_1998',
+            passwordConfirm: 'Talha_1998',
+        },
     });
-    const onSubmit = (data: any) => console.log(data);
+    const authContext = useContext(AuthContext);
+    const {publicAxios} = useContext(AxiosContext);
+    const onSubmit = async (data: any) => {
+
+        try {
+            delete data.passwordConfirm;
+            const response = await publicAxios.post('/user/register', data);
+
+            navigation.navigate('Login');
+          } catch (error) {
+            Alert.alert('Register failed', error.response.data.message);
+          }
+    };
 
     return (
-        <RegistrationLayout title={"Welcome Dear Guest!"} description={"You must be sign up and log in to your account to use this application."} footerRoutPathName={"Login"} navigation={navigation}>
+        <RegistrationLayout title={'Welcome Dear Guest!'} description={'You must be sign up and log in to your account to use this application.'} footerRoutPathName={'Login'} navigation={navigation}>
             <VStack space={3}>
-                <FormControl isInvalid={'name' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
+                <FormControl isInvalid={'firstName' in errors}>
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <Input
-                                    variant={"unstyled"}
+                                    variant={'unstyled'}
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    fontSize={"sm"} placeholder="First Name"
+                                    fontSize={'sm'} placeholder="First Name"
                                 />
                             )}
-                            name="name"
+                            name="firstName"
                         />
                     </Box>
                     <FormControl.ErrorMessage paddingLeft={1}>
-                        {errors.name?.message}
+                        {errors.firstName?.message}
                     </FormControl.ErrorMessage>
                 </FormControl>
 
-                <FormControl isInvalid={'surname' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
+                <FormControl isInvalid={'lastName' in errors}>
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <Input
-                                    variant={"unstyled"}
+                                    variant={'unstyled'}
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    fontSize={"sm"} placeholder="Last Name"
+                                    fontSize={'sm'} placeholder="Last Name"
                                 />
                             )}
-                            name="surname"
+                            name="lastName"
                         />
                     </Box>
                     <FormControl.ErrorMessage paddingLeft={1}>
-                        {errors.surname?.message}
+                        {errors.lastName?.message}
                     </FormControl.ErrorMessage>
                 </FormControl>
 
                 <FormControl isInvalid={'email' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <Input
-                                    variant={"unstyled"}
+                                    variant={'unstyled'}
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    fontSize={"sm"} placeholder="Email"
+                                    fontSize={'sm'} placeholder="Email"
                                 />
                             )}
                             name="email"
@@ -118,10 +139,10 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                     </FormControl.ErrorMessage>
                 </FormControl>
 
-                <FormControl isInvalid={'birthDate' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
-                        <Button variant={"unstyled"} onPress={() => setShowDatePicker(true)}>
-                            {date ? date.toDateString() : "Select a birth day"}
+                <FormControl isInvalid={'birthdate' in errors}>
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
+                        <Button variant={'unstyled'} onPress={() => setShowDatePicker(true)}>
+                            {date ? date.toDateString() : 'Select a birth day'}
                         </Button>
 
                         <Controller
@@ -129,32 +150,32 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                             render={({ field: { onChange, onBlur, value } }) => (
                                 <DatePicker
                                     modal
-                                    title={"Select a birth day"}
-                                    mode={"date"}
+                                    title={'Select a birth day'}
+                                    mode={'date'}
                                     open={showDatePicker}
                                     date={new Date(moment().subtract(13, 'years').toString())}
                                     maximumDate={new Date(moment().subtract(3, 'years').toString())}
-                                    androidVariant={"iosClone"}
+                                    androidVariant={'iosClone'}
                                     onConfirm={(date) => {
-                                        setShowDatePicker(false)
-                                        onChange(date)
-                                        setDate(date)
+                                        setShowDatePicker(false);
+                                        onChange(date);
+                                        setDate(date);
                                     }}
                                     onCancel={() => {
-                                        setShowDatePicker(false)
+                                        setShowDatePicker(false);
                                     }}
                                 />
                             )}
-                            name="birthDate"
+                            name="birthdate"
                         />
                     </Box>
                     <FormControl.ErrorMessage paddingLeft={1}>
-                        {errors.birthDate?.message}
+                        {errors.birthdate?.message}
                     </FormControl.ErrorMessage>
                 </FormControl>
 
                 <FormControl isInvalid={'password' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -162,14 +183,14 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    type={showPassword ? "text" : "password"} fontSize={"sm"} variant={"unstyled"} placeholder="Password" InputRightElement={<IconButton size={"lg"} _icon={{
+                                    type={showPassword ? 'text' : 'password'} fontSize={'sm'} variant={'unstyled'} placeholder="Password" InputRightElement={<IconButton size={'lg'} _icon={{
                                         as: Entypo,
-                                        name: showPassword ? "eye" : "eye-with-line",
-                                        size: "sm",
-                                        color: !showPassword ? "gray.400" : "gray.600"
+                                        name: showPassword ? 'eye' : 'eye-with-line',
+                                        size: 'sm',
+                                        color: !showPassword ? 'gray.400' : 'gray.600',
                                     }} _pressed={{
-                                        bg: "white"
-                                    }} onPress={handleShowPassowrdClick} variant={"ghost"} />}
+                                        bg: 'white',
+                                    }} onPress={handleShowPassowrdClick} variant={'ghost'} />}
                                 />
                             )}
                             name="password"
@@ -184,7 +205,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 </FormControl>
 
                 <FormControl isInvalid={'passwordConfirm' in errors}>
-                    <Box style={{ elevation: 1 }} bg={"white"} rounded={"xl"} paddingX={2} paddingY={2} width={"full"} >
+                    <Box style={{ elevation: 1 }} bg={'white'} rounded={'xl'} paddingX={2} paddingY={2} width={'full'} >
                         <Controller
                             control={control}
                             render={({ field: { onChange, onBlur, value } }) => (
@@ -192,14 +213,14 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                                     onBlur={onBlur}
                                     onChangeText={onChange}
                                     value={value}
-                                    type={showConfirmPassword ? "text" : "password"} fontSize={"sm"} variant={"unstyled"} placeholder="Password Confirm" InputRightElement={<IconButton size={"lg"} _icon={{
+                                    type={showConfirmPassword ? 'text' : 'password'} fontSize={'sm'} variant={'unstyled'} placeholder="Password Confirm" InputRightElement={<IconButton size={'lg'} _icon={{
                                         as: Entypo,
-                                        name: showConfirmPassword ? "eye" : "eye-with-line",
-                                        size: "sm",
-                                        color: !showConfirmPassword ? "gray.400" : "gray.600"
+                                        name: showConfirmPassword ? 'eye' : 'eye-with-line',
+                                        size: 'sm',
+                                        color: !showConfirmPassword ? 'gray.400' : 'gray.600',
                                     }} _pressed={{
-                                        bg: "white"
-                                    }} onPress={handleShowConfirmPassowrdClick} variant={"ghost"} />}
+                                        bg: 'white',
+                                    }} onPress={handleShowConfirmPassowrdClick} variant={'ghost'} />}
                                 />
                             )}
                             name="passwordConfirm"
@@ -214,13 +235,13 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 </FormControl>
 
                 <HStack space={1} flexWrap={'wrap'}>
-                    <Text color={"gray.600"} fontSize={"xs"}>When you register, you are deemed to have accepted the</Text>
-                    <Link isUnderlined={false} _text={{ fontSize: "xs", color: "darkBlue.500" }} onPress={() => setOpenModalTerms(true)}>Terms & Conditions</Link>
-                    <Text color={"gray.600"} fontSize={"xs"}>and</Text>
-                    <Link isUnderlined={false} _text={{ fontSize: "xs", color: "darkBlue.500" }} onPress={() => setOpenModalPrivacy(true)}>Privacy Policy</Link>
+                    <Text color={'gray.600'} fontSize={'xs'}>When you register, you are deemed to have accepted the</Text>
+                    <Link isUnderlined={false} _text={{ fontSize: 'xs', color: 'darkBlue.500' }} onPress={() => setOpenModalTerms(true)}>Terms & Conditions</Link>
+                    <Text color={'gray.600'} fontSize={'xs'}>and</Text>
+                    <Link isUnderlined={false} _text={{ fontSize: 'xs', color: 'darkBlue.500' }} onPress={() => setOpenModalPrivacy(true)}>Privacy Policy</Link>
 
                     <Modal isOpen={openModalTerms} onClose={() => setOpenModalTerms(false)}>
-                        <Modal.Content maxWidth={"480px"}>
+                        <Modal.Content maxWidth={'480px'}>
                             <Modal.CloseButton />
                             <Modal.Header>Terms & Conditions</Modal.Header>
                             <Modal.Body>
@@ -230,7 +251,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                     </Modal>
 
                     <Modal isOpen={openModalPrivacy} onClose={() => setOpenModalPrivacy(false)}>
-                        <Modal.Content maxWidth={"480px"}>
+                        <Modal.Content maxWidth={'480px'}>
                             <Modal.CloseButton />
                             <Modal.Header>Privacy Policy</Modal.Header>
                             <Modal.Body>
@@ -245,13 +266,13 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
             <Button _text={{
                 bold: true,
-                fontSize: "md",
-            }} height={60} rounded={"xl"} colorScheme={"orange"} width={"full"} shadow={"4"} onPress={handleSubmit(onSubmit)}>
+                fontSize: 'md',
+            }} height={60} rounded={'xl'} colorScheme={'orange'} width={'full'} shadow={'4'} onPress={handleSubmit(onSubmit)}>
                 Sign Up
             </Button>
 
         </RegistrationLayout>
-    )
-}
+    );
+};
 
-export default RegisterScreen
+export default RegisterScreen;

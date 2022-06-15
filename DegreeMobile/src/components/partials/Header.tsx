@@ -1,39 +1,40 @@
 import CustomContainer from '@components/CustomContainer';
-import { Box, Button, Circle, HStack, Icon, IconButton, Pressable, Text } from 'native-base';
-import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import * as RootNavigation from '@navigations/NavigationRef'
+import * as RootNavigation from '@navigations/NavigationRef';
+import { Box, HStack, IconButton, Text } from 'native-base';
+import React, { useContext, useEffect, useState } from 'react';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Header: React.FC<{ [key: string]: any }> = ({ ...props }) => {
     const [isCurrentRouteHome, setIsCurrentRouteHome] = useState(true);
     const [isCurrentRouteDashboardHome, setIsCurrentRouteDashboardHome] = useState(false);
 
     useEffect(() => {
-        if (RootNavigation.navigationRef.getCurrentRoute()?.name == "Home") {
+        if (RootNavigation.navigationRef.getCurrentRoute()?.name == 'Home') {
             setIsCurrentRouteHome(true);
         } else {
-            setIsCurrentRouteHome(false)
+            setIsCurrentRouteHome(false);
         }
-    }, [isCurrentRouteHome])
+    }, [isCurrentRouteHome]);
 
     useEffect(() => {
-        if (RootNavigation.navigationRef.getCurrentRoute()?.name == "DashboardHome") {
+        if (RootNavigation.navigationRef.getCurrentRoute()?.name == 'DashboardHome') {
             setIsCurrentRouteDashboardHome(true);
         } else {
-            setIsCurrentRouteDashboardHome(false)
+            setIsCurrentRouteDashboardHome(false);
 
         }
-    }, [isCurrentRouteDashboardHome])
+    }, [isCurrentRouteDashboardHome]);
 
+    const authContext = useContext(AuthContext);
 
     return (
         <CustomContainer>
-            <HStack justifyContent={"space-between"} alignItems={"center"} {...props}>
+            <HStack justifyContent={'space-between'} alignItems={'center'} {...props}>
                 <Box flex={1} >
-                    <Text color={'gray.500'} fontSize={"xs"}>Welcome,</Text>
-                    <Text fontWeight={"bold"} fontSize={"lg"}>Ahmet Talha</Text>
+                    <Text color={'gray.500'} fontSize={'xs'}>Welcome,</Text>
+                    <Text fontWeight={'bold'} fontSize={'lg'}>{authContext?.authState?.user?.fullName}</Text>
                 </Box>
                 <HStack space={2}>
                     {/* <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
@@ -43,24 +44,22 @@ const Header: React.FC<{ [key: string]: any }> = ({ ...props }) => {
                         color: "dark.50"
                     }} onPress={() => isCurrentRouteHome ? RootNavigation.navigate("DashboardHome") : RootNavigation.navigate("Home")}>
                     </IconButton> */}
-                    {RootNavigation.isReadyAndCanGoBack() && !isCurrentRouteHome ? <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                    {RootNavigation.isReadyAndCanGoBack() && !isCurrentRouteHome ? <IconButton borderRadius={'full'} borderColor={'gray.200'} colorScheme={'gray'} variant={'outline'} _icon={{
                         as: MaterialCommunityIcons,
-                        name: "keyboard-backspace",
-                        size: "sm",
-                        color: "dark.50"
-                    }} onPress={() => RootNavigation.goBack()}>
-                    </IconButton>: null}
-                    {!isCurrentRouteDashboardHome ? <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                        name: 'keyboard-backspace',
+                        size: 'sm',
+                        color: 'dark.50',
+                    }} onPress={() => RootNavigation.goBack()} /> : null}
+                    {!isCurrentRouteDashboardHome ? <IconButton borderRadius={'full'} borderColor={'gray.200'} colorScheme={'gray'} variant={'outline'} _icon={{
                         as: Entypo,
-                        name: "dots-three-horizontal",
-                        size: "sm",
-                        color: "dark.50"
-                    }} onPress={() => RootNavigation.navigate("DashboardHome")}>
-                    </IconButton> : null}
+                        name: 'dots-three-horizontal',
+                        size: 'sm',
+                        color: 'dark.50',
+                    }} onPress={() => RootNavigation.navigate('DashboardHome')} /> : null}
                 </HStack>
             </HStack>
         </CustomContainer>
-    )
-}
+    );
+};
 
 export default Header;
