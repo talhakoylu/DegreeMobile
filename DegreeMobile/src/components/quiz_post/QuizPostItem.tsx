@@ -2,7 +2,8 @@ import CustomContainer from '@components/CustomContainer';
 import { IQuizPostModel } from '@models/IQuizPostModel';
 import { Button, Heading, HStack, Text, VStack } from 'native-base';
 import React, { useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, useWindowDimensions } from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import ImageLinks from '../../../assets/ImageLinks';
 
 interface Props {
@@ -23,10 +24,11 @@ const DEFAULT_IMAGE = Image.resolveAssetSource(ImageLinks.default_image).uri;
 
 const QuizPostItem: React.FC<Props> = ({ data, ...props }) => {
     const [uriImageError, setUriImageError] = useState(false);
+    const { width } = useWindowDimensions();
     return (
         <CustomContainer>
             <VStack space={2} >
-                <Image onError={()=> setUriImageError(true)} source={{ uri: !uriImageError ?  data.coverImage ? `http://localhost:8080/${data.coverImage}` : DEFAULT_IMAGE : DEFAULT_IMAGE }} resizeMode={'stretch'} style={style.coverImage} />
+                <Image onError={() => setUriImageError(true)} source={{ uri: !uriImageError ? data.coverImage ? `http://localhost:8080/${data.coverImage}` : DEFAULT_IMAGE : DEFAULT_IMAGE }} resizeMode={'stretch'} style={style.coverImage} />
 
                 <HStack justifyContent={'space-between'}>
                     <Text color={'gray.400'} fontSize={'xs'}>
@@ -41,9 +43,7 @@ const QuizPostItem: React.FC<Props> = ({ data, ...props }) => {
                     {data.title}
                 </Heading>
 
-                <Text color={'gray.500'} textAlign={'justify'}>
-                    {data.description}
-                </Text>
+                <RenderHtml source={{ html: data.description }} contentWidth={width} />
 
                 <Button flex={1} colorScheme={'green'} _text={{
                     bold: true,
