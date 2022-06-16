@@ -51,13 +51,6 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
-        defaultValues: {
-            firstName: 'test',
-            lastName: 'test',
-            email: 'talhakoylu2@gmail.com',
-            password: 'Talha_1998',
-            passwordConfirm: 'Talha_1998',
-        },
     });
     const authContext = useContext(AuthContext);
     const {publicAxios} = useContext(AxiosContext);
