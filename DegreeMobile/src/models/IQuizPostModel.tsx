@@ -1,12 +1,15 @@
-import { IQuestionPostModel } from "./IQuestionPostModel";
+import { IQuestionPostModel } from './IQuestionPostModel';
 
 export interface IQuizPostModel{
-    id: number;
+    _id: string;
     title: string;
     description: string;
-    imgPath: string;
-    categoryId: number;
-    categoryName: string;
-    date: Date;
+    coverImage: string;
+    category: {
+        categoryId: string;
+        slug: string;
+        title: string;
+    }
+    createdAt: string;
     questions?: IQuestionPostModel[];
 }
