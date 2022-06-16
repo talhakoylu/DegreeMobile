@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ChangePasswordScreen, DashboardHomeScreen, DashboardSettingsScreen, HomeScreen, LastSolvedQuizesScreen, LoginScreen, QuizDetailQuestionsAndAnswersScreen, QuizJoinScreen, QuizPostDetailScreen, RegisterScreen, UserSettingsScreen } from '@views/screens/Index';
+import { ChangePasswordScreen, DashboardHomeScreen, HomeScreen, LastSolvedQuizesScreen, LoginScreen, QuizDetailQuestionsAndAnswersScreen, QuizJoinScreen, QuizPostDetailScreen, RegisterScreen, UserSettingsScreen } from '@views/screens/Index';
 import AnswersScreen from '@views/screens/quiz/AnswersScreen';
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
@@ -63,7 +63,6 @@ const NavigationIndex: React.FC = () => {
                 {authContext?.authState?.authenticated !== false ? <>
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="DashboardHome" component={DashboardHomeScreen} />
-                <Stack.Screen name="DashboardSettings" component={DashboardSettingsScreen} />
                 <Stack.Screen name="UserSettings" component={UserSettingsScreen} />
                 <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
                 <Stack.Screen name="LastSolvedQuizes" component={LastSolvedQuizesScreen} />
