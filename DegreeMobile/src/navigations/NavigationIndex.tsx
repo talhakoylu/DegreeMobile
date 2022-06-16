@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ChangePasswordScreen, DashboardHomeScreen, HomeScreen, LastSolvedQuizesScreen, LoginScreen, QuizDetailQuestionsAndAnswersScreen, QuizJoinScreen, QuizPostDetailScreen, RegisterScreen, UserSettingsScreen } from '@views/screens/Index';
+import { ChangePasswordScreen, DashboardHomeScreen, HomeScreen, LastSolvedQuizesScreen, LoginScreen, QuizDetailQuestionsAndAnswersScreen, QuizJoinScreen, QuizPostDetailScreen, QuizResultScreen, RegisterScreen, UserSettingsScreen } from '@views/screens/Index';
 import AnswersScreen from '@views/screens/quiz/AnswersScreen';
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
@@ -70,6 +70,7 @@ const NavigationIndex: React.FC = () => {
                 <Stack.Screen name="QuizPostQuestionsAnswers" options={{ headerShown: true, title: 'Question & Answers' }} component={QuizDetailQuestionsAndAnswersScreen} />
                 <Stack.Screen name="QuizJoin" component={QuizJoinScreen} />
                 <Stack.Screen name="QuizAnswers" component={AnswersScreen} />
+                <Stack.Screen name="QuizResultScreen" component={QuizResultScreen} />
                 </> : <>
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Register" component={RegisterScreen} />

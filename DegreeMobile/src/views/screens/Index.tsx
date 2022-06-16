@@ -1,6 +1,7 @@
 import ChangePasswordScreen from './dashboard/ChangePasswordScreen';
 import DashboardHomeScreen from './dashboard/DashboardHomeScreen';
 import LastSolvedQuizesScreen from './dashboard/LastSolvedQuizesScreen';
+import QuizResultScreen from './dashboard/ResultScreen';
 import UserSettingsScreen from './dashboard/UserSettingsScreen';
 import HomeScreen from './HomeScreen';
 import LoginScreen from './login_register/LoginScreen';
@@ -9,5 +10,5 @@ import AnswersScreen from './quiz/AnswersScreen';
 import QuizJoinScreen from './quiz/QuizJoinScreen';
 import QuizDetailQuestionsAndAnswersScreen from './QuizDetailQuestionsAndAnswersScreen';
 import QuizPostDetailScreen from './QuizPostDetailScreen';
-export { ChangePasswordScreen, DashboardHomeScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen, QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen, LoginScreen, RegisterScreen, QuizJoinScreen, AnswersScreen };
+export { ChangePasswordScreen, DashboardHomeScreen, LastSolvedQuizesScreen, UserSettingsScreen, HomeScreen, QuizDetailQuestionsAndAnswersScreen, QuizPostDetailScreen, LoginScreen, RegisterScreen, QuizJoinScreen, AnswersScreen, QuizResultScreen };
 

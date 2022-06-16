@@ -1,65 +1,55 @@
-import React, { useState } from 'react'
-import { Divider, FlatList, Heading, HStack, Text, View, VStack, } from 'native-base';
-import StandardLayout from '@views/layouts/StandardLayout';
 import CustomContainer from '@components/CustomContainer';
+import StandardLayout from '@views/layouts/StandardLayout';
+import { Avatar, Box, HStack, IconButton, Text, VStack } from 'native-base';
+import React, { useContext } from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useQuery } from 'react-query';
+import { AuthContext } from '../../../contexts/AuthContext';
+import { AxiosContext } from '../../../contexts/AxiosContext';
 
-interface Data{
-    id: number;
-    quizName: string;
-    date: string;
+interface ResultItemProps {
+    data: any;
+    [key: string]: any;
 }
 
-const data: Data[] = [
+const ResultItem: React.FC<ResultItemProps> = ({ data, itemCount, ...props }) => {
+    return (
+        <Box width={'full'} rounded="md" py={2} {...props}>
+            <HStack space={2} justifyContent={'space-between'} alignItems={'center'}>
+                <Avatar size={'sm'}>{itemCount + 1}</Avatar>
+                <Box width={'full'} maxWidth={'70%'}>
 
-    {id:1, quizName:'xx1', date:'xx.xx.xx'},
-    {id:2, quizName:'xx2', date:'xx.xx.xx'},
-    {id:3, quizName:'xx3', date:'xx.xx.xx'},
-    {id:4, quizName:'xx4', date:'xx.xx.xx'},
+                    <VStack>
+                        <Text fontWeight={'bold'}>{data.quizTitle}</Text>
+                        <Text>Total Question: <Text fontWeight={'bold'}>{data.questionCount}</Text>  <Text>Correct: <Text fontWeight={'bold'}>{data.correctCount}/{data.answers.length}</Text></Text></Text>
+
+                    </VStack>
+                </Box>
+                <IconButton colorScheme="indigo" variant={'solid'} _icon={{
+                    as: MaterialCommunityIcons,
+                    name: 'eye',
+                    size: 'sm',
+                }} onPress={() => props.navigation?.navigate('QuizResultScreen', {data: data?.answers })}/>
+            </HStack>
+        </Box>
+    );
+};
 
 
-]
 
-const LastSolvedQuizesScreen: React.FC = () => {
+const LastSolvedQuizesScreen: React.FC = ({ navigation }) => {
+    const authContext = useContext(AuthContext);
+    const { authAxios } = useContext(AxiosContext);
 
-    const item = ({item} : any)=>{
-        return (
-            <VStack flexDirection={'row'} justifyContent={'center'}>
-                <HStack width={100} backgroundColor={'gray.300'} borderBottomWidth={1} borderColor={'gray.200'}
-                 paddingX={4} paddingY={2}>
-                    <Text bold>{item.id}</Text>
-                </HStack>
-                <HStack width={100} backgroundColor={'blueGray.400'} borderBottomWidth={1} borderColor={'gray.200'} justifyContent={'center'}
-                 paddingX={4} paddingY={2}>
-                    <Text bold>{item.quizName}</Text>
-                </HStack>
-                <HStack width={100} backgroundColor={'gray.300'} borderBottomWidth={1} borderColor={'gray.200'} justifyContent={'flex-end'}
-                 paddingX={4} paddingY={2}>
-                    <Text bold>{item.date}</Text>
-                </HStack>
-            </VStack>
-        )
-    }
+    const lastSolvedQuizzesQuery = useQuery('lastSolvedQuizzesQuery', async () => authAxios.get('/quiz-result//find-all-results-by-user-id'), { enabled: authContext?.authState?.user ? true : false });
 
     return (
         <StandardLayout>
             <CustomContainer>
-                <VStack flex={1} space={4} width={'100%'}>
-                    <HStack justifyContent={"center"}>
-                        <Heading size="xl" color={'blueGray.800'}> Last Solved Quizes </Heading>
-                    </HStack>
-                    <Divider my={2} bg="gray.900" />
-                    <HStack justifyContent={"center"} alignItems={'center'}>
-                        <FlatList
-                        data={data}
-                        renderItem={item}
-                        keyExtractor={(item,index)=>index.toString()}
-                        />
-                    </HStack>
-                    <Divider my={2} bg="gray.900" />
-                </VStack>
+                {lastSolvedQuizzesQuery.isSuccess && lastSolvedQuizzesQuery.data.data.data.map((item, index) => <ResultItem data={item} key={index} itemCount={index} navigation={navigation} />)}
             </CustomContainer>
         </StandardLayout>
-    )
-}
+    );
+};
 
 export default LastSolvedQuizesScreen;
