@@ -2,6 +2,7 @@ import CustomContainer from '@components/CustomContainer';
 import * as RootNavigation from '@navigations/NavigationRef';
 import { Box, HStack, IconButton, Text } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -37,13 +38,12 @@ const Header: React.FC<{ [key: string]: any }> = ({ ...props }) => {
                     <Text fontWeight={'bold'} fontSize={'lg'}>{authContext?.authState?.user?.fullName}</Text>
                 </Box>
                 <HStack space={2}>
-                    {/* <IconButton borderRadius={"full"} borderColor={"gray.200"} colorScheme={"gray"} variant={"outline"} _icon={{
+                    {!isCurrentRouteHome ? <IconButton borderRadius={'full'} borderColor={'gray.200'} colorScheme={'gray'} variant={'outline'} _icon={{
                         as: isCurrentRouteHome ? Entypo : AntDesign,
-                        name: isCurrentRouteHome ? "dots-three-horizontal" : "home",
-                        size: "sm",
-                        color: "dark.50"
-                    }} onPress={() => isCurrentRouteHome ? RootNavigation.navigate("DashboardHome") : RootNavigation.navigate("Home")}>
-                    </IconButton> */}
+                        name: isCurrentRouteHome ? 'dots-three-horizontal' : 'home',
+                        size: 'sm',
+                        color: 'dark.50',
+                    }} onPress={() => RootNavigation.navigate('Home')} /> : null}
                     {RootNavigation.isReadyAndCanGoBack() && !isCurrentRouteHome ? <IconButton borderRadius={'full'} borderColor={'gray.200'} colorScheme={'gray'} variant={'outline'} _icon={{
                         as: MaterialCommunityIcons,
                         name: 'keyboard-backspace',
