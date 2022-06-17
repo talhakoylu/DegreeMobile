@@ -1,3 +1,4 @@
+import CustomAlert from '@components/partials/CustomAlert';
 import { ILastSolvedQuizCardModel } from 'models/ILastSolvedQuizCardModel';
 import { HStack, Link, Text, VStack } from 'native-base';
 import React, { useContext } from 'react';
@@ -22,10 +23,6 @@ const LastSolvedQuizzes: React.FC<Props> = ({ title = 'Last Solved Quizzes', des
     const { authAxios } = useContext(AxiosContext);
     const last5SolvedQuizzesQuery = useQuery('last5SolvedQuizzesQuery', async () => await authAxios.get('/quiz-result/find-last-5-results-by-user-id'), { enabled: authContext?.authState?.user ? true : false });
 
-    if (last5SolvedQuizzesQuery.isSuccess){
-        console.log(last5SolvedQuizzesQuery.data.data.data);
-    }
-
     return (
         <CustomContainer>
             <VStack space={3} width={'100%'} {...props}>
@@ -49,6 +46,9 @@ const LastSolvedQuizzes: React.FC<Props> = ({ title = 'Last Solved Quizzes', des
                 { last5SolvedQuizzesQuery.isSuccess && last5SolvedQuizzesQuery.data.data.data.map((item, index) => {
                     return (<SolvedQuizListItem navigation={props?.navigation} count={index} alignItems={'center'} item={item} key={index} />);
                 })}
+
+                { last5SolvedQuizzesQuery.isFetching && <CustomAlert title="Loading" status="info" />}
+                { last5SolvedQuizzesQuery.isError && <CustomAlert title="Something went wrong while  the fecthing data" status="error" />}
             </VStack>
         </CustomContainer>
     );
