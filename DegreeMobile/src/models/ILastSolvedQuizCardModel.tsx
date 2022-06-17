@@ -1,9 +1,9 @@
-import React from 'react';
 
 export interface ILastSolvedQuizCardModel{
-    id: number;
-    imgUri: string;
-    title: string;
-    categoryName: string;
-    date: Date;
+    _id: string;
+    quizTitle: string;
+    createdAt: string;
+    correctCount: number;
+    questionCount: number;
+    answeredCount: number;
 }
