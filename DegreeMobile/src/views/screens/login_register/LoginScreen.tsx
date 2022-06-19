@@ -21,11 +21,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     const handleClick = () => setShow(!show);
 
     const { control, handleSubmit, formState: { errors } } = useForm({
-        resolver: yupResolver(schema),
-        defaultValues: {
-            email: 'talhakoylu0@gmail.com',
-            password: 'Talha_1998',
-        },
+        resolver: yupResolver(schema)
     });
 
 
