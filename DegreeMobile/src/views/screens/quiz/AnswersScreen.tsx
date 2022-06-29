@@ -84,7 +84,7 @@ const AnswersScreen: React.FC = ({ route, navigation }) => {
     return (
         <ScrollView minHeight={Dimensions.get('screen').height}>
 
-            {(questionsQuery.isSuccess && questionData) && <VStack paddingY={4} space={8} minHeight={Dimensions.get('screen').height * 0.9}>
+            {(questionsQuery.isSuccess && questionData) && <VStack paddingTop={4} paddingBottom={6} marginBottom={5} space={8} minHeight={Dimensions.get('screen').height * 0.9}>
                 <HStack justifyContent={'center'} alignItems={'center'} space={4}>
                     <Text>Kalan Zaman: </Text>
                     <CountdownCircleTimer
@@ -99,7 +99,6 @@ const AnswersScreen: React.FC = ({ route, navigation }) => {
                     >
                         {({ remainingTime }) => <Text>{remainingTime}</Text>}
                     </CountdownCircleTimer>
-                    <Button onPress={()=> setRestartTimer(prev => prev + 1)} >Restart</Button>
                 </HStack>
 
                 <Center>
@@ -111,9 +110,9 @@ const AnswersScreen: React.FC = ({ route, navigation }) => {
                     </Box>
                 </Center>
 
-                <Center flex={1}>
+                <Center flex={1} paddingBottom={5}>
 
-                    <VStack justifyContent={'center'} width={Dimensions.get('screen').width * 0.9} marginBottom={5} paddingBottom={5} space={3} flex={1}>
+                    <VStack marginBottom={5} justifyContent={'center'} width={Dimensions.get('screen').width * 0.9} space={3} flex={1}>
 
                         {questionData.answer1 && <PressableAnswer isDisabled={isTimeEnd} choiceLetter="A" answerText={questionData.answer1} color1="info.300" color2={'info.500'} onPress={() => {
                             setSelectedAnswer('1');
@@ -134,12 +133,14 @@ const AnswersScreen: React.FC = ({ route, navigation }) => {
                         <PressableAnswer isDisabled={isTimeEnd} choiceLetter="-" answerText={'Boş bırak'} color1="gray.300" color2={'gray.400'} onPress={() => {
                             setSelectedAnswer('-');
                         }} borderWidth={selectedAnswer === '-' ? 2 : 0} borderColor={'gray.500'} />
+
+                        <HStack width={Dimensions.get('screen').width * 0.9} justifyContent={'space-between'}>
+                            <Button colorScheme={'red'} onPress={() => onSubmitFinish()}>Sınavdan Çık</Button>
+                            <Button colorScheme={'green'} isDisabled={selectedAnswer === '' ? true : false} onPress={() => onPressSave()} isLoading={isLoading} isLoadingText={'Saving'}>Cevabı Kaydet</Button>
+                        </HStack>
                     </VStack>
 
-                    <HStack width={Dimensions.get('screen').width * 0.9} justifyContent={'space-between'}>
-                        <Button colorScheme={'red'} onPress={() => onSubmitFinish()}>Sınavdan Çık</Button>
-                        <Button colorScheme={'green'} isDisabled={selectedAnswer === '' ? true : false} onPress={() => onPressSave()} isLoading={isLoading} isLoadingText={'Saving'}>Cevabı Kaydet</Button>
-                    </HStack>
+
                 </ Center>
             </VStack>
             }
